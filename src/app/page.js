@@ -55,7 +55,7 @@ export default function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 border border-white shadow-2xl rounded-4xl p-4 animate-bounce">
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 border border-white shadow-2xl rounded-4xl py-4 px-2 animate-bounce">
           <ArrowDown className=" text-white" />
         </div>
       </section>
