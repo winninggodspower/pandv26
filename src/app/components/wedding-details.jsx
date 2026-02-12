@@ -1,4 +1,4 @@
-import { Calendar, Clock, MapPin } from "lucide-react";
+import { Calendar, Clock, MapPin, Navigation, Calendar as CalendarIcon } from "lucide-react";
 
 export default function WeddingDetails() {
   return (
@@ -83,6 +83,56 @@ export default function WeddingDetails() {
             <p className="text-sm text-gray-700 italic leading-relaxed">
               "Join us as we exchange our vows and begin our journey together as one"
             </p>
+          </div>
+        </div>
+
+        {/* Venue Section */}
+        <div className="mt-12 md:mt-16">
+          <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
+            {/* Venue Header */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 border border-amber-400 rounded flex items-center justify-center">
+                <MapPin className="w-5 h-5 text-amber-600" />
+              </div>
+              <span className="text-xs font-bold tracking-widest text-amber-600 uppercase">Venue</span>
+            </div>
+
+            {/* Venue Details */}
+            <h3 className="text-2xl md:text-3xl font-junge text-foreground mb-2">
+              Dbayways Events Centre
+            </h3>
+            <p className="text-sm text-gray-700 mb-6 leading-relaxed">
+              Plot 14 Folashade Ave St,<br />
+              Lekki Phase 1,<br />
+              Lekki 106104, Lagos,<br />
+              Nigeria
+            </p>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 mb-8">
+              <button className="px-6 py-2 border border-amber-600 text-amber-600 text-sm font-semibold rounded hover:bg-amber-50 transition">
+                📍 Get Directions
+              </button>
+              <button className="px-6 py-2 bg-amber-500 text-white text-sm font-semibold rounded hover:bg-amber-600 transition flex items-center justify-center gap-2">
+                📅 Google Calendar
+              </button>
+              <button className="px-6 py-2 bg-gray-800 text-white text-sm font-semibold rounded hover:bg-gray-900 transition flex items-center justify-center gap-2">
+                📆 Apple / Outlook
+              </button>
+            </div>
+
+            {/* Map */}
+            <div className="rounded overflow-hidden shadow-sm">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.2949547869556!2d3.513748!3d6.430394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b9d9b9b9b9b9b%3A0x9b9b9b9b9b9b9b9b!2sDbaywater%20Events%20Centre!5e0!3m2!1sen!2sng!4v1623456789"
+                width="100%"
+                height="400"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
           </div>
         </div>
       </div>
