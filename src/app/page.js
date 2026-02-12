@@ -1,6 +1,7 @@
 "use client"
 
 import { ArrowDown } from "lucide-react";
+import WeddingDetails from "./components/wedding-details";
 
 export default function Home() {
   return (
@@ -59,6 +60,9 @@ export default function Home() {
           <ArrowDown className=" text-white" />
         </div>
       </section>
+
+      {/* Wedding Details Section */}
+      <WeddingDetails />
 
     </main>
   )
