@@ -1,17 +1,24 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import { ToastContainer, toast } from 'react-toastify';
+import { Inter, Inspiration, Junge } from "next/font/google";
+import { ToastContainer } from 'react-toastify';
 import "./globals.css";
 import NextSessionProviders from "./session-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap', 
+})
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inspiration = Inspiration({
   subsets: ["latin"],
-});
+   weight: "400",
+  variable: "--font-inspiration",
+})
+
+const junge = Junge({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-junge",
+})
 
 export const metadata = {
   title: "Equipment Daily Report",
@@ -23,7 +30,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} ${inspiration.variable} ${junge.variable} ${inter.className} antialiased`}
       >
         <NextSessionProviders>
           {children}
