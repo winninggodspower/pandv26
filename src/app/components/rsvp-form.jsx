@@ -86,7 +86,7 @@ export default function RSVPForm() {
         </div>
 
         {/* Form Container */}
-        <div className="bg-white card px-6 md:px-8 py-8 md:py-12">
+        <div className="bg-[#F8F6F1] card px-6 md:px-8 py-8 md:py-12">
           <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
             {/* Attendance Question */}
             <div>

@@ -1,4 +1,4 @@
-import { Calendar, Clock, MapPin, Navigation, Calendar as CalendarIcon } from "lucide-react";
+import { Calendar, Clock, MapPin, Calendar as CalendarIcon } from "lucide-react";
 
 export default function WeddingDetails() {
   return (
