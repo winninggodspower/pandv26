@@ -19,9 +19,9 @@ export default function CollapsibleSection({ isOpen, children, className = '' })
         overflow: 'hidden',
         transition: 'max-height 0.3s ease-in-out',
       }}
-      className={className}
+      className='m-0'
     >
-      <div ref={setContentRef}>
+      <div ref={setContentRef} className='space-y-6 ps-3 pl-4 border-l-4 border-primary'>
         {children}
       </div>
     </div>

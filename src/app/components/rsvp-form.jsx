@@ -15,6 +15,7 @@ export default function RSVPForm() {
   const [bringingPlusOne, setBringingPlusOne] = useState(false);
   const [bringingChildren, setBringingChildren] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ export default function RSVPForm() {
     cashGiftAmount: '',
     plusOneName: '',
     plusOneEmail: '',
-    childrenCount: '0',
+    childrenCount: '1',
   });
 
   const accountDetails = [
@@ -72,7 +73,8 @@ export default function RSVPForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setIsLoading(true)
+
     try {
       const dataToSubmit = {
         fullName: formData.fullName,
@@ -109,7 +111,7 @@ export default function RSVPForm() {
           setSendCashGift(true);
           setBringingPlusOne(false);
           setBringingChildren(false);
-        }, 3000);
+        }, 30000);
       } else {
         console.error('Form submission error:', result.errors);
         alert('Error submitting RSVP: ' + (result.errors ? result.errors.join(', ') : 'Unknown error'));
@@ -117,6 +119,8 @@ export default function RSVPForm() {
     } catch (error) {
       console.error('Error submitting RSVP:', error);
       alert('Error submitting RSVP: ' + error.message);
+    } finally {
+      setIsLoading(false)
     }
   };
 
@@ -168,214 +172,216 @@ export default function RSVPForm() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
 
-            {/* Full Name */}
+              {/* Full Name */}
 
-            <FormInput
-              label="Your Full Name"
-              type="text"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleInputChange}
-              placeholder="Enter your full name"
-              required
-            />
-
-            {/* Email */}
-            <FormInput
-              label="Your Email Address"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              placeholder="Enter your email"
-              required
-            />
-
-            {/* Relationship */}
-            <FormSelect
-              label="Relationship with the couple"
-              name="relationship"
-              value={formData.relationship}
-              onChange={handleInputChange}
-              options={[
-                { value: 'family', label: 'Family' },
-                { value: 'friend', label: 'Friend' },
-                { value: 'colleague', label: 'Colleague' },
-                { value: 'other', label: 'Other' },
-              ]}
-              required
-            />
-
-            {/* Plus One Checkbox */}
-            <CheckboxField
-              id="plus-one"
-              label="I'm bringing a plus one"
-              checked={bringingPlusOne}
-              onChange={(e) => setBringingPlusOne(e.target.checked)}
-            />
-
-            {/* Plus One Fields (Conditional with Animation) */}
-            <CollapsibleSection isOpen={bringingPlusOne} className="space-y-4 pl-4 border-l-4 border-primary">
               <FormInput
-                label="Plus One's Name"
+                label="Your Full Name"
                 type="text"
-                name="plusOneName"
-                value={formData.plusOneName}
+                name="fullName"
+                value={formData.fullName}
                 onChange={handleInputChange}
-                placeholder="Enter their full name"
-              />
-              <FormInput
-                label="Plus One's Email"
-                type="email"
-                name="plusOneEmail"
-                value={formData.plusOneEmail}
-                onChange={handleInputChange}
-                placeholder="Enter their email"
-              />
-            </CollapsibleSection>
-
-            {/* Children Toggle */}
-            <div className="flex items-center justify-between py-4 border-b border-gray-200">
-              <label className="text-sm font-medium text-gray">
-                Are you bringing children?
-              </label>
-              <button
-                type="button"
-                onClick={() => setBringingChildren(!bringingChildren)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  bringingChildren ? 'bg-primary' : 'bg-gray-300'
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    bringingChildren ? 'translate-x-6' : 'translate-x-1'
-                  }`}
-                />
-              </button>
-            </div>
-
-            {/* Number of Children (Conditional with Animation) */}
-            <CollapsibleSection isOpen={bringingChildren}>
-              <FormInput
-                label="Number of children"
-                type="number"
-                name="childrenCount"
-                value={formData.childrenCount}
-                onChange={handleInputChange}
-                min="1"
-                max="10"
-              />
-            </CollapsibleSection>
-
-            {/* Divider */}
-            <div className="h-px bg-gray-200 my-8" />
-
-            {/* Cash Gift Section */}
-            <div>
-              <h3 className="text-xs font-semibold text-gray mb-2 uppercase">
-                WE WILL APPRECIATE YOUR SUPPORT
-              </h3>
-              <p className="text-xs text-gray mb-4">
-                Please Note: Couple can only receive cash gifts both physically and through transfer
-              </p>
-
-              <RadioGroup
-                label="Send cash gifts"
-                name="cashGifts"
-                value={sendCashGift ? 'yes' : 'no'}
-                onChange={(e) => setSendCashGift(e.target.value === 'yes')}
-                options={[
-                  { value: 'yes', label: 'YES' },
-                  { value: 'no', label: 'NO' },
-                ]}
-                layout="horizontal"
+                placeholder="Enter your full name"
                 required
-                className="mb-6"
               />
 
-              {sendCashGift && (
-                <>
-                  <FormInput
-                    type="text"
-                    placeholder="Give cash gift"
-                    className="mb-3"
+              {/* Email */}
+              <FormInput
+                label="Your Email Address"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Enter your email"
+                required
+              />
+
+              {/* Relationship */}
+              <FormSelect
+                label="Relationship with the couple"
+                name="relationship"
+                value={formData.relationship}
+                onChange={handleInputChange}
+                options={[
+                  { value: 'family', label: 'Family' },
+                  { value: 'friend', label: 'Friend' },
+                  { value: 'colleague', label: 'Colleague' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                required
+              />
+
+              {/* Plus One Checkbox */}
+              <CheckboxField
+                id="plus-one"
+                label="I'm bringing a plus one"
+                checked={bringingPlusOne}
+                onChange={(e) => setBringingPlusOne(e.target.checked)}
+              />
+
+              {/* Plus One Fields (Conditional with Animation) */}
+              <CollapsibleSection isOpen={bringingPlusOne}>
+                <FormInput
+                  label="Plus One's Name"
+                  type="text"
+                  name="plusOneName"
+                  value={formData.plusOneName}
+                  onChange={handleInputChange}
+                  placeholder="Enter their full name"
+                />
+                <FormInput
+                  label="Plus One's Email"
+                  type="email"
+                  name="plusOneEmail"
+                  value={formData.plusOneEmail}
+                  onChange={handleInputChange}
+                  placeholder="Enter their email"
+                />
+              </CollapsibleSection>
+
+              {/* Children Toggle */}
+              <div className="flex items-center justify-between py-4 border-b border-black/30">
+                <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
+                  Are you bringing children?
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setBringingChildren(!bringingChildren)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${bringingChildren ? 'bg-primary' : 'bg-gray-300'
+                    }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${bringingChildren ? 'translate-x-6' : 'translate-x-1'
+                      }`}
                   />
-                  <p className="text-xs text-gray mb-6">
-                    Kindly send cash gift via any convenient platform
-                  </p>
+                </button>
+              </div>
 
-                  <FormInput
-                    label="Amount"
-                    type="text"
-                    name="cashGiftAmount"
-                    value={formData.cashGiftAmount}
-                    onChange={handleInputChange}
-                    placeholder="Amount"
-                    className="mb-8"
-                  />
+              {/* Number of Children (Conditional with Animation) */}
+              <CollapsibleSection isOpen={bringingChildren}>
+                <FormInput
+                  label="Number of children"
+                  type="number"
+                  name="childrenCount"
+                  value={formData.childrenCount}
+                  onChange={handleInputChange}
+                  min="1"
+                  max="10"
+                />
+              </CollapsibleSection>
 
-                  {/* Account Details */}
-                  <div className="space-y-6">
-                    <h4 className="text-sm font-semibold text-gray uppercase">
-                      ACCOUNT DETAILS
-                    </h4>
+              {/* Divider */}
+              <div className="h-px bg-black/30 my-8" />
 
-                    {accountDetails.map((account, index) => (
-                      <div key={index} className="border border-gray-200 rounded p-4 md:p-5">
-                        <div className="flex items-start justify-between mb-3">
-                          <h5 className="font-semibold text-sm text-gray">
-                            {account.name}
-                          </h5>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              handleCopy(
-                                `${account.beneficiary}\n${account.accountNumber}\n${account.bankName}`,
-                                index
-                              )
-                            }
-                            className="text-primary hover:text-primary/80 transition"
-                            title="Copy account details"
-                          >
-                            {copiedIndex === index ? (
-                              <Check className="w-5 h-5" />
-                            ) : (
-                              <Copy className="w-5 h-5" />
-                            )}
-                          </button>
-                        </div>
+              {/* Cash Gift Section */}
+              <div>
+                <h3 className="text-sm font-medium text-gray mb-2 uppercase">
+                  WE WILL APPRECIATE YOUR SUPPORT
+                </h3>
+                <p className="text-xs text-gray mb-4">
+                  Please Note: Couple can only receive cash gifts both physically and through transfer
+                </p>
 
-                        <div className="space-y-2 text-xs text-gray">
-                          <p>{account.beneficiary}</p>
-                          <p>{account.accountNumber}</p>
-                          <p>{account.bankName}</p>
-                          {account.address && <p className="font-semibold mt-3">{account.address}</p>}
-                          {account.additionalInfo && <p>{account.additionalInfo}</p>}
-                          {account.bic && <p>{account.bic}</p>}
-                        </div>
+                <RadioGroup
+                  label="Send cash gifts"
+                  name="cashGifts"
+                  value={sendCashGift ? 'yes' : 'no'}
+                  onChange={(e) => setSendCashGift(e.target.value === 'yes')}
+                  options={[
+                    { value: 'yes', label: 'YES' },
+                    { value: 'no', label: 'NO' },
+                  ]}
+                  layout="horizontal"
+                  required
+                  className="mb-6"
+                />
+
+                {sendCashGift && (
+                  <>
+                    <FormInput
+                      type="text"
+                      placeholder="Give cash gift"
+                      className="mb-8"
+                    />
+
+                    <div className='px-14'>
+                      <p className="text-base text-gray mb-6">
+                        Kindly send cash gift via any convenient platform
+                      </p>
+
+                      <FormInput
+                        label="Amount"
+                        type="text"
+                        name="cashGiftAmount"
+                        value={formData.cashGiftAmount}
+                        onChange={handleInputChange}
+                        placeholder="Amount"
+                        className="mb-8"
+                      />
+
+                      {/* Account Details */}
+                      <div className="space-y-6">
+                        <h4 className="text-sm font-semibold text-gray uppercase">
+                          ACCOUNT DETAILS
+                        </h4>
+
+                        {accountDetails.map((account, index) => (
+                          <div key={index} className="border border-gray-200 rounded p-4 md:p-5">
+                            <div className="flex items-start justify-between mb-3">
+                              <h5 className="font-semibold text-sm text-gray">
+                                {account.name}
+                              </h5>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleCopy(
+                                    `${account.beneficiary}\n${account.accountNumber}\n${account.bankName}`,
+                                    index
+                                  )
+                                }
+                                className="text-primary hover:text-primary/80 transition"
+                                title="Copy account details"
+                              >
+                                {copiedIndex === index ? (
+                                  <Check className="w-5 h-5" />
+                                ) : (
+                                  <Copy className="w-5 h-5" />
+                                )}
+                              </button>
+                            </div>
+
+                            <div className="space-y-2 text-xs text-gray">
+                              <p>{account.beneficiary}</p>
+                              <p>{account.accountNumber}</p>
+                              <p>{account.bankName}</p>
+                              {account.address && <p className="font-semibold mt-3">{account.address}</p>}
+                              {account.additionalInfo && <p>{account.additionalInfo}</p>}
+                              {account.bic && <p>{account.bic}</p>}
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
+                    </div>
+                  </>
+                )}
+              </div>
 
-            {/* reCAPTCHA */}
-            <div className="my-6">
-              <div
-                className="g-recaptcha"
-                data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-              />
-            </div>
+              {/* reCAPTCHA */}
+              <div className="my-6">
+                <div
+                  className="g-recaptcha"
+                  data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                />
+              </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-primary hover:bg-amber-600 text-white font-semibold py-4 rounded text-sm md:text-base transition-colors flex items-center justify-center gap-2"
-            >
-              <span>▶</span> SEND RSVP
-            </button>
-          </form>
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full bg-primary hover:bg-amber-600 text-white font-medium py-4 rounded-[3px] text-s transition-colors flex items-center justify-center gap-2"
+              >
+               {isLoading ? 'Submitting...' : '▶ SEND RSVP'}
+              </button>
+            </form>
           )}
         </div>
       </div>

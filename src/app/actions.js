@@ -1,5 +1,5 @@
 "use server"
-import { object, string, number, date, boolean } from "yup"
+import { object, string, number, boolean } from "yup"
 import mongoose from "mongoose"
 import dbConnect from "./lib/mongoose"
 import RSVP from "./models/rsvp"
@@ -46,7 +46,9 @@ export async function submitRSVP(formDataObj) {
 
     // Save to database
     const rsvp = new RSVP(validatedData)
-    await rsvp.save()
+    const savedDoc = await rsvp.save()
+
+    console.log("Saved document:", savedDoc)
 
     return { success: true, message: "RSVP submitted successfully!" }
   } catch (error) {

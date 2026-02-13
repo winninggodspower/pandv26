@@ -15,9 +15,8 @@ export default function RadioGroup({
   return (
     <div className={className}>
       {label && (
-        <label className="block text-sm md:text-base text-gray mb-4 font-medium">
+        <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
       <div className={`flex items-center ${isHorizontal ? 'gap-6' : 'flex-col gap-3'}`}>
