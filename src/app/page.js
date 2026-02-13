@@ -3,6 +3,7 @@
 import { ArrowDown } from "lucide-react";
 import WeddingDetails from "./components/wedding-details";
 import RSVPForm from "./components/rsvp-form";
+import Footer from "./components/footer";
 
 export default function Home() {
   return (
@@ -67,6 +68,9 @@ export default function Home() {
 
       {/* RSVP Form Section */}
       <RSVPForm />
+
+      {/* Footer */}
+      <Footer />
 
     </main>
   )
