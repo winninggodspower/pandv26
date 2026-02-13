@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
+import { submitRSVP } from '../actions';
 
 export default function RSVPForm() {
   const [isAttending, setIsAttending] = useState(true);
@@ -64,28 +65,54 @@ export default function RSVPForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    setIsSubmitted(true);
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        fullName: '',
-        email: '',
-        relationship: '',
-        cashGiftAmount: '',
-        plusOneName: '',
-        plusOneEmail: '',
-        childrenCount: '0',
-      });
-      setIsAttending(true);
-      setSendCashGift(true);
-      setBringingPlusOne(false);
-      setBringingChildren(false);
-    }, 3000);
+    
+    try {
+      const dataToSubmit = {
+        fullName: formData.fullName,
+        email: formData.email,
+        isAttending,
+        relationship: formData.relationship,
+        bringingPlusOne,
+        plusOneName: formData.plusOneName,
+        plusOneEmail: formData.plusOneEmail,
+        bringingChildren,
+        childrenCount: bringingChildren ? parseInt(formData.childrenCount) : 0,
+        sendCashGift,
+        cashGiftAmount: formData.cashGiftAmount,
+      };
+
+      console.log('Submitting form data:', dataToSubmit);
+      const result = await submitRSVP(dataToSubmit);
+
+      if (result.success) {
+        setIsSubmitted(true);
+        // Reset form after 3 seconds
+        setTimeout(() => {
+          setIsSubmitted(false);
+          setFormData({
+            fullName: '',
+            email: '',
+            relationship: '',
+            cashGiftAmount: '',
+            plusOneName: '',
+            plusOneEmail: '',
+            childrenCount: '0',
+          });
+          setIsAttending(true);
+          setSendCashGift(true);
+          setBringingPlusOne(false);
+          setBringingChildren(false);
+        }, 3000);
+      } else {
+        console.error('Form submission error:', result.errors);
+        alert('Error submitting RSVP: ' + (result.errors ? result.errors.join(', ') : 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error submitting RSVP:', error);
+      alert('Error submitting RSVP: ' + error.message);
+    }
   };
 
   return (
