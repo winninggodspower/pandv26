@@ -18,7 +18,9 @@ export const authOptions = {
                 // that is false/null if the credentials are invalid.
                 // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
                 // You can also use the `req` object to obtain additional parameters
+
                 const user = {id: '1', name: "J Smith", email: "admin@gmail.com"}
+                console.log(credentials)
 
                 if (credentials.username === ADMIN_EMAIL || credentials.password === ADMIN_PASSWORD) {
                     return user;
