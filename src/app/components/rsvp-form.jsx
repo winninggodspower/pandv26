@@ -92,7 +92,7 @@ export default function RSVPForm() {
     <section className="py-14 md:py-24 px-4 md:px-8 bg-[#FCFBF8]">
       <div className="max-w-2xl mx-auto">
         {/* RSVP Header */}
-        <div className="text-center mb-12 md:mb-16">
+        <div className="text-center mb-8 md:mb-12">
           <div className="flex justify-center mb-3">
             <img src="/solar-heart-shine.svg" alt="Heart" className="w-6 h-6" />
           </div>
@@ -104,6 +104,37 @@ export default function RSVPForm() {
           </p>
           <div className="flex justify-center">
             <img src="/solar-line.svg" alt="" />
+          </div>
+        </div>
+
+        {/* Attendance Question - Outside Card */}
+        <div className="text-center mb-6 md:mb-8">
+          <label className="block text-sm md:text-base font-semibold text-gray mb-4">
+            Will you be attending? <span className="text-red-500">*</span>
+          </label>
+          <div className="flex items-center justify-center gap-6 md:gap-8">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="attending"
+                value="yes"
+                checked={isAttending === true}
+                onChange={() => setIsAttending(true)}
+                className="w-4 h-4 accent-primary"
+              />
+              <span className="text-sm md:text-base font-medium text-gray">YES</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="attending"
+                value="no"
+                checked={isAttending === false}
+                onChange={() => setIsAttending(false)}
+                className="w-4 h-4 accent-primary"
+              />
+              <span className="text-sm md:text-base font-medium text-gray">NO</span>
+            </label>
           </div>
         </div>
 
@@ -120,36 +151,6 @@ export default function RSVPForm() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
-            {/* Attendance Question */}
-            <div>
-              <label className="block text-sm font-semibold text-gray mb-4">
-                Will you be attending? <span className="text-red-500">*</span>
-              </label>
-              <div className="flex items-center gap-6">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="attending"
-                    value="yes"
-                    checked={isAttending === true}
-                    onChange={() => setIsAttending(true)}
-                    className="w-4 h-4"
-                  />
-                  <span className="text-sm font-medium text-gray">YES</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="attending"
-                    value="no"
-                    checked={isAttending === false}
-                    onChange={() => setIsAttending(false)}
-                    className="w-4 h-4"
-                  />
-                  <span className="text-sm font-medium text-gray">NO</span>
-                </label>
-              </div>
-            </div>
 
             {/* Full Name */}
             <div>
