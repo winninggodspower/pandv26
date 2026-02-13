@@ -3,6 +3,11 @@
 import { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { submitRSVP } from '../actions';
+import FormInput from './form-input';
+import FormSelect from './form-select';
+import RadioGroup from './radio-group';
+import CheckboxField from './checkbox-field';
+import CollapsibleSection from './collapsible-section';
 
 export default function RSVPForm() {
   const [isAttending, setIsAttending] = useState(true);
@@ -136,33 +141,17 @@ export default function RSVPForm() {
 
         {/* Attendance Question - Outside Card */}
         <div className="flex justify-center items-baseline gap-2 mb-6 md:mb-8">
-          <label className="text-sm md:text-xl text-gray mb-4">
-            Will you be attending?
-          </label>
-          <div className="flex items-baseline justify-center gap-5">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="radio"
-                name="attending"
-                value="yes"
-                checked={isAttending === true}
-                onChange={() => setIsAttending(true)}
-                className="w-4 h-4 accent-gray bg-[#D9D9D9]"
-              />
-              <span className="text-sm md:text-lg text-gray">YES</span>
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="radio"
-                name="attending"
-                value="no"
-                checked={isAttending === false}
-                onChange={() => setIsAttending(false)}
-                className="w-4 h-4 accent-gray bg-[#D9D9D9]"
-              />
-              <span className="text-sm md:text-lg text-gray">NO</span>
-            </label>
-          </div>
+          <RadioGroup
+            label="Will you be attending?"
+            name="attending"
+            value={isAttending ? 'yes' : 'no'}
+            onChange={(e) => setIsAttending(e.target.value === 'yes')}
+            options={[
+              { value: 'yes', label: 'YES' },
+              { value: 'no', label: 'NO' },
+            ]}
+            layout="horizontal"
+          />
         </div>
 
         {/* Form Container */}
@@ -180,102 +169,70 @@ export default function RSVPForm() {
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
 
             {/* Full Name */}
-            <div>
-              <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
-                Your Full Name
-              </label>
-              <input
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleInputChange}
-                placeholder="Enter your full name"
-                className="w-full px-4 py-3 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50"
-                required
-              />
-            </div>
+
+            <FormInput
+              label="Your Full Name"
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleInputChange}
+              placeholder="Enter your full name"
+              required
+            />
 
             {/* Email */}
-            <div>
-              <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
-                Your Email Address
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Enter your email"
-                className="w-full px-4 py-3 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50"
-                required
-              />
-            </div>
+            <FormInput
+              label="Your Email Address"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder="Enter your email"
+              required
+            />
 
             {/* Relationship */}
-            <div>
-              <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
-                Relationship with the couple
-              </label>
-              <select
-                name="relationship"
-                value={formData.relationship}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50"
-                required
-              >
-                <option value="">Select your relationship</option>
-                <option value="family">Family</option>
-                <option value="friend">Friend</option>
-                <option value="colleague">Colleague</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
+            <FormSelect
+              label="Relationship with the couple"
+              name="relationship"
+              value={formData.relationship}
+              onChange={handleInputChange}
+              options={[
+                { value: 'family', label: 'Family' },
+                { value: 'friend', label: 'Friend' },
+                { value: 'colleague', label: 'Colleague' },
+                { value: 'other', label: 'Other' },
+              ]}
+              required
+            />
 
             {/* Plus One Checkbox */}
-            <div className="flex items-center gap-3">
-              <input
-                type="checkbox"
-                id="plus-one"
-                checked={bringingPlusOne}
-                onChange={(e) => setBringingPlusOne(e.target.checked)}
-                className="w-4 h-4 rounded text-white ring-1 accent-primary"
-              />
-              <label htmlFor="plus-one" className="text-sm text-gray cursor-pointer">
-                I'm bringing a plus one
-              </label>
-            </div>
+            <CheckboxField
+              id="plus-one"
+              label="I'm bringing a plus one"
+              checked={bringingPlusOne}
+              onChange={(e) => setBringingPlusOne(e.target.checked)}
+            />
 
-            {/* Plus One Fields (Conditional) */}
-            {bringingPlusOne && (
-              <div className="space-y-4 pl-4 border-l-4 border-primary">
-                <div>
-                  <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
-                    Plus One's Name
-                  </label>
-                  <input
-                    type="text"
-                    name="plusOneName"
-                    value={formData.plusOneName}
-                    onChange={handleInputChange}
-                    placeholder="Enter their full name"
-                    className="w-full px-4 py-3 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
-                    Plus One's Email
-                  </label>
-                  <input
-                    type="email"
-                    name="plusOneEmail"
-                    value={formData.plusOneEmail}
-                    onChange={handleInputChange}
-                    placeholder="Enter their email"
-                    className="w-full px-4 py-3 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50"
-                  />
-                </div>
-              </div>
-            )}
+            {/* Plus One Fields (Conditional with Animation) */}
+            <CollapsibleSection isOpen={bringingPlusOne} className="space-y-4 pl-4 border-l-4 border-primary">
+              <FormInput
+                label="Plus One's Name"
+                type="text"
+                name="plusOneName"
+                value={formData.plusOneName}
+                onChange={handleInputChange}
+                placeholder="Enter their full name"
+              />
+              <FormInput
+                label="Plus One's Email"
+                type="email"
+                name="plusOneEmail"
+                value={formData.plusOneEmail}
+                onChange={handleInputChange}
+                placeholder="Enter their email"
+              />
+            </CollapsibleSection>
 
             {/* Children Toggle */}
             <div className="flex items-center justify-between py-4 border-b border-gray-200">
@@ -297,23 +254,18 @@ export default function RSVPForm() {
               </button>
             </div>
 
-            {/* Number of Children (Conditional) */}
-            {bringingChildren && (
-              <div>
-                <label className="block text-xs font-semibold text-gray mb-3 uppercase">
-                  Number of children
-                </label>
-                <input
-                  type="number"
-                  name="childrenCount"
-                  value={formData.childrenCount}
-                  onChange={handleInputChange}
-                  min="1"
-                  max="10"
-                  className="w-full px-4 py-3 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50"
-                />
-              </div>
-            )}
+            {/* Number of Children (Conditional with Animation) */}
+            <CollapsibleSection isOpen={bringingChildren}>
+              <FormInput
+                label="Number of children"
+                type="number"
+                name="childrenCount"
+                value={formData.childrenCount}
+                onChange={handleInputChange}
+                min="1"
+                max="10"
+              />
+            </CollapsibleSection>
 
             {/* Divider */}
             <div className="h-px bg-gray-200 my-8" />
@@ -327,55 +279,39 @@ export default function RSVPForm() {
                 Please Note: Couple can only receive cash gifts both physically and through transfer
               </p>
 
-              <label className="block text-sm font-semibold text-gray mb-4">
-                Send cash gifts
-              </label>
-              <div className="flex items-center gap-6 mb-6">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="cashGifts"
-                    value="yes"
-                    checked={sendCashGift === true}
-                    onChange={() => setSendCashGift(true)}
-                    className="w-4 h-4"
-                  />
-                  <span className="text-sm font-medium text-gray">YES</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="cashGifts"
-                    value="no"
-                    checked={sendCashGift === false}
-                    onChange={() => setSendCashGift(false)}
-                    className="w-4 h-4"
-                  />
-                  <span className="text-sm font-medium text-gray">NO</span>
-                </label>
-              </div>
+              <RadioGroup
+                label="Send cash gifts"
+                name="cashGifts"
+                value={sendCashGift ? 'yes' : 'no'}
+                onChange={(e) => setSendCashGift(e.target.value === 'yes')}
+                options={[
+                  { value: 'yes', label: 'YES' },
+                  { value: 'no', label: 'NO' },
+                ]}
+                layout="horizontal"
+                required
+                className="mb-6"
+              />
 
               {sendCashGift && (
                 <>
-                  <input
+                  <FormInput
                     type="text"
                     placeholder="Give cash gift"
-                    className="w-full px-4 py-3 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50 mb-3"
+                    className="mb-3"
                   />
                   <p className="text-xs text-gray mb-6">
                     Kindly send cash gift via any convenient platform
                   </p>
 
-                  <label className="block text-xs font-semibold text-gray mb-3 uppercase">
-                    Amount
-                  </label>
-                  <input
+                  <FormInput
+                    label="Amount"
                     type="text"
                     name="cashGiftAmount"
                     value={formData.cashGiftAmount}
                     onChange={handleInputChange}
                     placeholder="Amount"
-                    className="w-full px-4 py-3 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50 mb-8"
+                    className="mb-8"
                   />
 
                   {/* Account Details */}
