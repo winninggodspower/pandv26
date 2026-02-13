@@ -9,12 +9,16 @@ export default function RSVPForm() {
   const [bringingPlusOne, setBringingPlusOne] = useState(false);
   const [bringingChildren, setBringingChildren] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     relationship: '',
     cashGiftAmount: '',
+    plusOneName: '',
+    plusOneEmail: '',
+    childrenCount: '0',
   });
 
   const accountDetails = [
@@ -64,6 +68,24 @@ export default function RSVPForm() {
     e.preventDefault();
     // Handle form submission
     console.log('Form submitted:', formData);
+    setIsSubmitted(true);
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      setIsSubmitted(false);
+      setFormData({
+        fullName: '',
+        email: '',
+        relationship: '',
+        cashGiftAmount: '',
+        plusOneName: '',
+        plusOneEmail: '',
+        childrenCount: '0',
+      });
+      setIsAttending(true);
+      setSendCashGift(true);
+      setBringingPlusOne(false);
+      setBringingChildren(false);
+    }, 3000);
   };
 
   return (
@@ -87,7 +109,17 @@ export default function RSVPForm() {
 
         {/* Form Container */}
         <div className="bg-white card px-6 md:px-8 py-8 md:py-12">
-          <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
+          {isSubmitted ? (
+            <div className="text-center py-12">
+              <h3 className="text-3xl md:text-4xl font-light text-gray mb-4 font-junge">
+                Thank you for stopping by!
+              </h3>
+              <p className="text-sm md:text-base text-gray/70">
+                We've received your RSVP and will get back to you soon.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
             {/* Attendance Question */}
             <div>
               <label className="block text-sm font-semibold text-gray mb-4">
@@ -178,12 +210,44 @@ export default function RSVPForm() {
                 id="plus-one"
                 checked={bringingPlusOne}
                 onChange={(e) => setBringingPlusOne(e.target.checked)}
-                className="w-4 h-4 rounded border-gray-300"
+                className="w-4 h-4 rounded border-gray-300 accent-primary"
               />
               <label htmlFor="plus-one" className="text-sm text-gray cursor-pointer">
                 I'm bringing a plus one
               </label>
             </div>
+
+            {/* Plus One Fields (Conditional) */}
+            {bringingPlusOne && (
+              <div className="space-y-4 pl-4 border-l-4 border-primary">
+                <div>
+                  <label className="block text-xs font-semibold text-gray mb-2 uppercase">
+                    Plus One's Name
+                  </label>
+                  <input
+                    type="text"
+                    name="plusOneName"
+                    value={formData.plusOneName}
+                    onChange={handleInputChange}
+                    placeholder="Enter their full name"
+                    className="w-full px-4 py-3 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray mb-2 uppercase">
+                    Plus One's Email
+                  </label>
+                  <input
+                    type="email"
+                    name="plusOneEmail"
+                    value={formData.plusOneEmail}
+                    onChange={handleInputChange}
+                    placeholder="Enter their email"
+                    className="w-full px-4 py-3 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50"
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Children Toggle */}
             <div className="flex items-center justify-between py-4 border-b border-gray-200">
@@ -204,6 +268,24 @@ export default function RSVPForm() {
                 />
               </button>
             </div>
+
+            {/* Number of Children (Conditional) */}
+            {bringingChildren && (
+              <div>
+                <label className="block text-xs font-semibold text-gray mb-3 uppercase">
+                  Number of children
+                </label>
+                <input
+                  type="number"
+                  name="childrenCount"
+                  value={formData.childrenCount}
+                  onChange={handleInputChange}
+                  min="1"
+                  max="10"
+                  className="w-full px-4 py-3 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary bg-gray-50"
+                />
+              </div>
+            )}
 
             {/* Divider */}
             <div className="h-px bg-gray-200 my-8" />
@@ -330,6 +412,7 @@ export default function RSVPForm() {
               <span>▶</span> SEND RSVP
             </button>
           </form>
+          )}
         </div>
       </div>
     </section>
