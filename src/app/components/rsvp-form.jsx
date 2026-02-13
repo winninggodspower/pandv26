@@ -166,7 +166,7 @@ export default function RSVPForm() {
         </div>
 
         {/* Form Container */}
-        <div className="bg-white card px-6 md:px-8 py-8 md:py-12">
+        <div className="card !bg-[#F8F6F1] px-6 md:px-8 py-8 md:py-12">
           {isSubmitted ? (
             <div className="text-center py-12">
               <h3 className="text-3xl md:text-4xl font-light text-gray mb-4 font-junge">
@@ -181,8 +181,8 @@ export default function RSVPForm() {
 
             {/* Full Name */}
             <div>
-              <label className="block text-xs font-semibold text-gray mb-2 uppercase">
-                Your Full Name <span className="text-red-500">*</span>
+              <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
+                Your Full Name
               </label>
               <input
                 type="text"
@@ -197,8 +197,8 @@ export default function RSVPForm() {
 
             {/* Email */}
             <div>
-              <label className="block text-xs font-semibold text-gray mb-2 uppercase">
-                Your Email Address <span className="text-red-500">*</span>
+              <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
+                Your Email Address
               </label>
               <input
                 type="email"
@@ -213,8 +213,8 @@ export default function RSVPForm() {
 
             {/* Relationship */}
             <div>
-              <label className="block text-xs font-semibold text-gray mb-2 uppercase">
-                Relationship with the couple <span className="text-red-500">*</span>
+              <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
+                Relationship with the couple
               </label>
               <select
                 name="relationship"
@@ -238,7 +238,7 @@ export default function RSVPForm() {
                 id="plus-one"
                 checked={bringingPlusOne}
                 onChange={(e) => setBringingPlusOne(e.target.checked)}
-                className="w-4 h-4 rounded border-gray-300 accent-primary"
+                className="w-4 h-4 rounded text-white ring-1 accent-primary"
               />
               <label htmlFor="plus-one" className="text-sm text-gray cursor-pointer">
                 I'm bringing a plus one
@@ -249,7 +249,7 @@ export default function RSVPForm() {
             {bringingPlusOne && (
               <div className="space-y-4 pl-4 border-l-4 border-primary">
                 <div>
-                  <label className="block text-xs font-semibold text-gray mb-2 uppercase">
+                  <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
                     Plus One's Name
                   </label>
                   <input
@@ -262,7 +262,7 @@ export default function RSVPForm() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray mb-2 uppercase">
+                  <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
                     Plus One's Email
                   </label>
                   <input
@@ -328,7 +328,7 @@ export default function RSVPForm() {
               </p>
 
               <label className="block text-sm font-semibold text-gray mb-4">
-                Send cash gifts <span className="text-red-500">*</span>
+                Send cash gifts
               </label>
               <div className="flex items-center gap-6 mb-6">
                 <label className="flex items-center gap-2 cursor-pointer">

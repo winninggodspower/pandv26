@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${inspiration.variable} ${junge.variable} ${inter.className} antialiased bg-[#FCFBF8]`}
+        className={`${inter.variable} ${inspiration.variable} ${junge.variable} ${inter.className} antialiased bg-[#F8F6F1]`}
       >
         <NextSessionProviders>
           {children}
