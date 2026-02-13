@@ -118,25 +118,47 @@ export default function WeddingDetails() {
               </div>
 
 
-              {/* Action Buttons */}
               <div className="flex flex-col items-center sm:flex-row gap-3 mb-8">
-                <button className="ps-3.5 py-3.5 rounded-[2px] w-52 border border-primary text-[15px] font-semibold hover:bg-amber-50 transition flex gap-3">
+
+                {/* Get Directions */}
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=Plot+14+Folashade+Ave+Lekki+Phase+1+Lagos+Nigeria"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ps-3.5 py-3.5 rounded-[2px] w-52 border border-primary text-[15px] font-semibold hover:bg-amber-50 transition flex gap-3"
+                >
                   <MapPin className="size-5 text-primary" />
                   Get Directions
-                </button>
-                <button className="py-3.5 rounded-[2px] w-52 bg-primary text-white text-[15px] font-semibold hover:bg-amber-600 transition flex items-center justify-center gap-3">
+                </a>
+
+                {/* Google Calendar */}
+                <a
+                  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Praise+%26+Victor+Wedding&dates=20260620T090000/20260620T170000&details=Join+us+at+Plot+14+Folashade+Ave+Lekki+Phase+1+Lagos+Nigeria&location=Plot+14+Folashade+Ave+Lekki+Phase+1+Lagos+Nigeria"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3.5 rounded-[2px] w-52 bg-primary text-white text-[15px] font-semibold hover:bg-amber-600 transition flex items-center justify-center gap-3"
+                >
                   <Calendar className="size-4" /> Google Calendar
-                </button>
-                <button className="py-3.5 rounded-[2px] w-52 bg-[#38332E] text-white text-[15px] font-semibold hover:bg-gray-900 transition flex items-center justify-center gap-3">
+                </a>
+
+                {/* Apple / Outlook */}
+                <a
+                  href="/files/praise-victor-wedding.ics"
+                  download
+                  className="py-3.5 rounded-[2px] w-52 bg-[#38332E] text-white text-[15px] font-semibold hover:bg-gray-900 transition flex items-center justify-center gap-3"
+                >
                   <Calendar className="size-4" /> Apple / Outlook
-                </button>
+                </a>
+
               </div>
+
+
             </div>
 
             {/* Map */}
             <div className="rounded overflow-hidden shadow-sm">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.2949547869556!2d3.513748!3d6.430394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b9d9b9b9b9b9b%3A0x9b9b9b9b9b9b9b9b!2sDbaywater%20Events%20Centre!5e0!3m2!1sen!2sng!4v1623456789"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.308!2d3.4724278!3d6.4273334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf5ba87d1afaf%3A0x8bdf0b7bd3e0863b!2sPlot%2014%20Folashade%20Ave%2C%20Lekki%20Phase%201%2C%20Lagos%2C%20Nigeria!5e0!3m2!1sen!2sng!4v1707898560000"
                 width="100%"
                 height="410"
                 style={{ border: 0 }}
@@ -145,6 +167,7 @@ export default function WeddingDetails() {
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
             </div>
+
           </div>
         </div>
       </div>
