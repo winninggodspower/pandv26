@@ -5,7 +5,7 @@ import WeddingDetails from "./components/wedding-details";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-[#FCFBF8]">
 
       {/* Hero Section */}
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
@@ -56,7 +56,7 @@ export default function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 border border-white shadow-2xl rounded-4xl py-4 px-2 animate-bounce">
+        <div className="absolute -bottom-2 md:bottom-1 cursor-pointer left-1/2 transform -translate-x-1/2 z-20 border border-white shadow-2xl rounded-4xl py-4 px-2 animate-bounce">
           <ArrowDown className=" text-white" />
         </div>
       </section>

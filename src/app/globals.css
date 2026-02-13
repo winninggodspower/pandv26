@@ -13,6 +13,17 @@
   --font-inspo: var(--font-inspiration);
   --font-junge: var(--font-junge);
   --color-primary: #D2962D;
+  --color-gray: #403F3F;
+  --color-secondary: #CE927E;
+}
+
+@layer utilities {
+  .card{
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    position: relative;
+    background-color: #FCFBF8;
+    border-radius: 2px;
+  }
 }
 
 body {
