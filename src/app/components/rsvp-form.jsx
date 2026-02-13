@@ -135,11 +135,11 @@ export default function RSVPForm() {
         </div>
 
         {/* Attendance Question - Outside Card */}
-        <div className="text-center mb-6 md:mb-8">
-          <label className="block text-sm md:text-base font-semibold text-gray mb-4">
-            Will you be attending? <span className="text-red-500">*</span>
+        <div className="flex justify-center items-baseline gap-2 mb-6 md:mb-8">
+          <label className="text-sm md:text-xl text-gray mb-4">
+            Will you be attending?
           </label>
-          <div className="flex items-center justify-center gap-6 md:gap-8">
+          <div className="flex items-baseline justify-center gap-5">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
@@ -147,9 +147,9 @@ export default function RSVPForm() {
                 value="yes"
                 checked={isAttending === true}
                 onChange={() => setIsAttending(true)}
-                className="w-4 h-4 accent-primary"
+                className="w-4 h-4 accent-gray bg-[#D9D9D9]"
               />
-              <span className="text-sm md:text-base font-medium text-gray">YES</span>
+              <span className="text-sm md:text-lg text-gray">YES</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -158,9 +158,9 @@ export default function RSVPForm() {
                 value="no"
                 checked={isAttending === false}
                 onChange={() => setIsAttending(false)}
-                className="w-4 h-4 accent-primary"
+                className="w-4 h-4 accent-gray bg-[#D9D9D9]"
               />
-              <span className="text-sm md:text-base font-medium text-gray">NO</span>
+              <span className="text-sm md:text-lg text-gray">NO</span>
             </label>
           </div>
         </div>
