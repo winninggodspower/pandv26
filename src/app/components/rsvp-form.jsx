@@ -264,7 +264,7 @@ export default function RSVPForm() {
                   name="childrenCount"
                   value={formData.childrenCount}
                   onChange={handleInputChange}
-                  min="1"
+                  min="0"
                   max="10"
                 />
               </CollapsibleSection>

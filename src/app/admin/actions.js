@@ -21,3 +21,16 @@ export async function getAllRsvps() {
     createdAt: rsvp.createdAt ? new Date(rsvp.createdAt).toISOString() : null,
   }))
 }
+
+export async function getCashGiftRsvps() {
+  await dbConnect()
+
+  const rsvps = await RSVP.find({ sendCashGift: true }).sort({ createdAt: -1 }).lean()
+
+  return rsvps.map((rsvp) => ({
+    id: rsvp._id.toString(),
+    fullName: rsvp.fullName ?? "",
+    cashGiftAmount: rsvp.cashGiftAmount ?? "",
+    createdAt: rsvp.createdAt ? new Date(rsvp.createdAt).toISOString() : null,
+  }))
+}
