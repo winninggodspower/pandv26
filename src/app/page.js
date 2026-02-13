@@ -7,7 +7,7 @@ import Footer from "./components/footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#FCFBF8]">
+    <main className="min-h-screen bg-[#F8F6F1]">
 
       {/* Hero Section */}
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">

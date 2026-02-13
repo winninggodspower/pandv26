@@ -155,7 +155,7 @@ export default function RSVPForm() {
         </div>
 
         {/* Form Container */}
-        <div className="bg-white card px-6 md:px-8 py-8 md:py-12">
+        <div className="card !bg-[#F8F6F1] px-6 md:px-8 py-8 md:py-12">
           {isSubmitted ? (
             <div className="text-center py-12">
               <h3 className="text-3xl md:text-4xl font-light text-gray mb-4 font-junge">
@@ -169,6 +169,7 @@ export default function RSVPForm() {
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
 
             {/* Full Name */}
+
             <FormInput
               label="Your Full Name"
               type="text"
