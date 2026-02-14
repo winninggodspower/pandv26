@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { submitRSVP } from '../actions';
 import FormInput from './form-input';
@@ -17,6 +17,37 @@ export default function RSVPForm() {
   const [copiedIndex, setCopiedIndex] = useState(null);
   const [isLoading, setIsLoading] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (!isSubmitted || typeof window === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let cancelled = false;
+
+    const runConfetti = async () => {
+      const { default: confetti } = await import('canvas-confetti');
+      if (cancelled) return;
+
+      const base = {
+        particleCount: 36,
+        spread: 56,
+        startVelocity: 22,
+        gravity: 1.08,
+        ticks: 220,
+        scalar: 0.88,
+        zIndex: 90,
+      };
+
+      confetti({ ...base, origin: { x: 0.2, y: 0.78 } });
+      confetti({ ...base, origin: { x: 0.8, y: 0.78 } });
+    };
+
+    runConfetti();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isSubmitted]);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -144,19 +175,21 @@ export default function RSVPForm() {
         </div>
 
         {/* Attendance Question - Outside Card */}
-        <div className="flex justify-center items-baseline gap-2 mb-6 md:mb-8">
-          <RadioGroup
-            label="Will you be attending?"
-            name="attending"
-            value={isAttending ? 'yes' : 'no'}
-            onChange={(e) => setIsAttending(e.target.value === 'yes')}
-            options={[
-              { value: 'yes', label: 'YES' },
-              { value: 'no', label: 'NO' },
-            ]}
-            layout="horizontal"
-          />
-        </div>
+        {!isSubmitted && (
+          <div className="flex justify-center items-baseline gap-2 mb-6 md:mb-8">
+            <RadioGroup
+              label="Will you be attending?"
+              name="attending"
+              value={isAttending ? 'yes' : 'no'}
+              onChange={(e) => setIsAttending(e.target.value === 'yes')}
+              options={[
+                { value: 'yes', label: 'YES' },
+                { value: 'no', label: 'NO' },
+              ]}
+              layout="horizontal"
+            />
+          </div>
+        )}
 
         {/* Form Container */}
         <div className="card !bg-[#F8F6F1] px-6 md:px-8 py-8 md:py-12">
@@ -170,10 +203,10 @@ export default function RSVPForm() {
               </p>
             </div>
           ) : (
+
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
 
               {/* Full Name */}
-
               <FormInput
                 label="Your Full Name"
                 type="text"

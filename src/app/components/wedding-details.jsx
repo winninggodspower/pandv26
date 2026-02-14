@@ -1,11 +1,13 @@
-import { Calendar, Clock, MapPin, Calendar as CalendarIcon } from "lucide-react";
+import { Calendar, Clock, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
+import { Reveal } from "./luxury-motion";
 
 export default function WeddingDetails() {
   return (
-    <section className="py-14 md:py-24 px-0 md:px-8 ">
+    <section id="wedding-details" className="py-14 md:py-24 px-0 md:px-8 ">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16 px-4">
+        <Reveal className="text-center mb-16 px-4">
           <div className="flex justify-center mb-2">
             <img src={'/solar-heart-shine.svg'} />
           </div>
@@ -15,12 +17,19 @@ export default function WeddingDetails() {
           <div className="flex justify-center">
             <img src="/solar-line.svg" alt="" />
           </div>
-        </div>
+        </Reveal>
 
         {/* Events Grid */}
         <div className="flex flex-col md:flex-row gap-8 md:gap-6 lg:gap-11 w-fit mx-auto">
           {/* Ceremony Card */}
-          <div className="card px-7 py-11 max-w-[460px] h-fit">
+          <motion.div
+            className="card px-7 py-11 max-w-[460px] h-fit"
+            initial={{ opacity: 0, y: 34 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 1.35, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -4, boxShadow: "0px 16px 30px rgba(0, 0, 0, 0.14)" }}
+          >
             <div className="absolute -top-3 flex items-center gap-3 mb-4">
               <span className="inline-block bg-primary text-white w-28 text-center py-1 text-xs uppercase">
                 Our Ceremony
@@ -55,10 +64,17 @@ export default function WeddingDetails() {
             <p className="text-sm text-black font-extralight italic leading-relaxed">
               "Join us as we exchange our vows and begin our journey together as one"
             </p>
-          </div>
+          </motion.div>
 
           {/* Reception Card */}
-          <div className="card px-7 py-11 max-w-[460px] mt-10">
+          <motion.div
+            className="card px-7 py-11 max-w-[460px] mt-10"
+            initial={{ opacity: 0, y: 34 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 1.35, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -4, boxShadow: "0px 16px 30px rgba(0, 0, 0, 0.14)" }}
+          >
             <div className="absolute -top-3 flex items-center gap-3 mb-4">
               <span className="inline-block bg-secondary text-white w-28 text-center py-1 text-xs uppercase">RECEPTION</span>
             </div>
@@ -90,11 +106,11 @@ export default function WeddingDetails() {
             <p className="text-sm text-black font-extralight italic leading-relaxed">
               "Join us as we exchange our vows and begin our journey together as one"
             </p>
-          </div>
+          </motion.div>
         </div>
 
         {/* Venue Section */}
-        <div className="mt-12 px-4">
+        <Reveal delay={0.1} className="mt-12 px-4">
           <div className="bg-white card">
 
             <div className="pt-7 px-6 pb-9 md:px-8 md:pt-16 md:pb-12">
@@ -169,7 +185,7 @@ export default function WeddingDetails() {
             </div>
 
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
