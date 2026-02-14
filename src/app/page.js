@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react";
 import { ArrowDown } from "lucide-react";
 import WeddingDetails from "./components/wedding-details";
 import RSVPForm from "./components/rsvp-form";
@@ -7,6 +8,44 @@ import Footer from "./components/footer";
 import { HeroFloat, Reveal, ScrollCue } from "./components/luxury-motion";
 
 export default function Home() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let cancelled = false;
+    const timer = window.setTimeout(async () => {
+      const { default: confetti } = await import("canvas-confetti");
+      if (cancelled) return;
+
+      const burst = {
+        particleCount: 34,
+        spread: 56,
+        startVelocity: 20,
+        gravity: 1.05,
+        scalar: 0.86,
+        ticks: 220,
+        zIndex: 80,
+      };
+
+      confetti({
+        ...burst,
+        angle: 58,
+        origin: { x: 0.03, y: 0.72 },
+      });
+
+      confetti({
+        ...burst,
+        angle: 122,
+        origin: { x: 0.97, y: 0.72 },
+      });
+    }, 1700);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, []);
+
   const handleScrollDown = () => {
     const detailsSection = document.getElementById("wedding-details");
     if (!detailsSection) return;

@@ -3,9 +3,9 @@ import mongoose from "mongoose"
 const rsvpSchema = new mongoose.Schema(
   {
     fullName: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, default: "" },
     isAttending: { type: Boolean, required: true },
-    relationship: { type: String, required: true },
+    relationship: { type: String, default: "" },
     bringingPlusOne: { type: Boolean, default: false },
     plusOneName: { type: String },
     plusOneEmail: { type: String },

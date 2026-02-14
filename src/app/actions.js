@@ -6,23 +6,31 @@ import RSVP from "./models/rsvp"
 
 const rsvpSchema = object({
   fullName: string().trim().required("Full name is required"),
-  email: string().trim().email("Valid email is required").required("Email is required"),
-  isAttending: boolean().required("Please select attendance"),
-  relationship: string().trim().required("Relationship is required"),
-  bringingPlusOne: boolean(),
-  plusOneName: string().when('bringingPlusOne', {
+  email: string().trim().email("Valid email is required").when("isAttending", {
     is: true,
+    then: (schema) => schema.required("Email is required"),
+    otherwise: (schema) => schema.nullable(),
+  }),
+  isAttending: boolean().required("Please select attendance"),
+  relationship: string().trim().when("isAttending", {
+    is: true,
+    then: (schema) => schema.required("Relationship is required"),
+    otherwise: (schema) => schema.nullable(),
+  }),
+  bringingPlusOne: boolean(),
+  plusOneName: string().when(['bringingPlusOne', 'isAttending'], {
+    is: (bringingPlusOne, isAttending) => Boolean(bringingPlusOne && isAttending),
     then: (schema) => schema.trim().required("Plus one name is required"),
     otherwise: (schema) => schema.trim().nullable()
   }),
-  plusOneEmail: string().when('bringingPlusOne', {
-    is: true,
+  plusOneEmail: string().when(['bringingPlusOne', 'isAttending'], {
+    is: (bringingPlusOne, isAttending) => Boolean(bringingPlusOne && isAttending),
     then: (schema) => schema.trim().email("Valid email is required").required("Plus one email is required"),
     otherwise: (schema) => schema.trim().nullable()
   }),
   bringingChildren: boolean(),
-  childrenCount: number().when('bringingChildren', {
-    is: true,
+  childrenCount: number().when(['bringingChildren', 'isAttending'], {
+    is: (bringingChildren, isAttending) => Boolean(bringingChildren && isAttending),
     then: (schema) => schema.required("Number of children is required").min(1, "Must bring at least 1 child"),
     otherwise: (schema) => schema.nullable()
   }),

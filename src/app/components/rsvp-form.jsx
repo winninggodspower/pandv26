@@ -19,6 +19,21 @@ export default function RSVPForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
+    if (isAttending) return;
+
+    setBringingPlusOne(false);
+    setBringingChildren(false);
+    setFormData((prev) => ({
+      ...prev,
+      email: '',
+      relationship: '',
+      plusOneName: '',
+      plusOneEmail: '',
+      childrenCount: '0',
+    }));
+  }, [isAttending]);
+
+  useEffect(() => {
     if (!isSubmitted || typeof window === 'undefined') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -109,14 +124,14 @@ export default function RSVPForm() {
     try {
       const dataToSubmit = {
         fullName: formData.fullName,
-        email: formData.email,
+        email: isAttending ? formData.email : '',
         isAttending,
-        relationship: formData.relationship,
-        bringingPlusOne,
-        plusOneName: formData.plusOneName,
-        plusOneEmail: formData.plusOneEmail,
-        bringingChildren,
-        childrenCount: bringingChildren ? parseInt(formData.childrenCount) : 0,
+        relationship: isAttending ? formData.relationship : '',
+        bringingPlusOne: isAttending ? bringingPlusOne : false,
+        plusOneName: isAttending ? formData.plusOneName : '',
+        plusOneEmail: isAttending ? formData.plusOneEmail : '',
+        bringingChildren: isAttending ? bringingChildren : false,
+        childrenCount: isAttending && bringingChildren ? parseInt(formData.childrenCount) : 0,
         sendCashGift,
         cashGiftAmount: formData.cashGiftAmount,
       };
@@ -206,104 +221,108 @@ export default function RSVPForm() {
 
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
 
-              {/* Full Name */}
-              <FormInput
-                label="Your Full Name"
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleInputChange}
-                placeholder="Enter your full name"
-                required
-              />
-
-              {/* Email */}
-              <FormInput
-                label="Your Email Address"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Enter your email"
-                required
-              />
-
-              {/* Relationship */}
-              <FormSelect
-                label="Relationship with the couple"
-                name="relationship"
-                value={formData.relationship}
-                onChange={handleInputChange}
-                options={[
-                  { value: 'family', label: 'Family' },
-                  { value: 'friend', label: 'Friend' },
-                  { value: 'colleague', label: 'Colleague' },
-                  { value: 'other', label: 'Other' },
-                ]}
-                required
-              />
-
-              {/* Plus One Checkbox */}
-              <CheckboxField
-                id="plus-one"
-                label="I'm bringing a plus one"
-                checked={bringingPlusOne}
-                onChange={(e) => setBringingPlusOne(e.target.checked)}
-              />
-
-              {/* Plus One Fields (Conditional with Animation) */}
-              <CollapsibleSection isOpen={bringingPlusOne}>
-                <FormInput
-                  label="Plus One's Name"
-                  type="text"
-                  name="plusOneName"
-                  value={formData.plusOneName}
-                  onChange={handleInputChange}
-                  placeholder="Enter their full name"
-                />
-                <FormInput
-                  label="Plus One's Email"
-                  type="email"
-                  name="plusOneEmail"
-                  value={formData.plusOneEmail}
-                  onChange={handleInputChange}
-                  placeholder="Enter their email"
-                />
-              </CollapsibleSection>
-
-              {/* Children Toggle */}
-              <div className="flex items-center justify-between py-4 border-b border-black/30">
-                <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
-                  Are you bringing children?
-                </label>
-                <button
-                  type="button"
-                  onClick={() => setBringingChildren(!bringingChildren)}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${bringingChildren ? 'bg-primary' : 'bg-gray-300'
-                    }`}
-                >
-                  <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${bringingChildren ? 'translate-x-6' : 'translate-x-1'
-                      }`}
+              {isAttending && (
+                <>
+                  {/* Full Name */}
+                  <FormInput
+                    label="Your Full Name"
+                    type="text"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleInputChange}
+                    placeholder="Enter your full name"
+                    required
                   />
-                </button>
-              </div>
 
-              {/* Number of Children (Conditional with Animation) */}
-              <CollapsibleSection isOpen={bringingChildren}>
-                <FormInput
-                  label="Number of children"
-                  type="number"
-                  name="childrenCount"
-                  value={formData.childrenCount}
-                  onChange={handleInputChange}
-                  min="0"
-                  max="10"
-                />
-              </CollapsibleSection>
+                  {/* Email */}
+                  <FormInput
+                    label="Your Email Address"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="Enter your email"
+                    required
+                  />
 
-              {/* Divider */}
-              <div className="h-px bg-black/30 my-8" />
+                  {/* Relationship */}
+                  <FormSelect
+                    label="Relationship with the couple"
+                    name="relationship"
+                    value={formData.relationship}
+                    onChange={handleInputChange}
+                    options={[
+                      { value: 'family', label: 'Family' },
+                      { value: 'friend', label: 'Friend' },
+                      { value: 'colleague', label: 'Colleague' },
+                      { value: 'other', label: 'Other' },
+                    ]}
+                    required
+                  />
+
+                  {/* Plus One Checkbox */}
+                  <CheckboxField
+                    id="plus-one"
+                    label="I'm bringing a plus one"
+                    checked={bringingPlusOne}
+                    onChange={(e) => setBringingPlusOne(e.target.checked)}
+                  />
+
+                  {/* Plus One Fields (Conditional with Animation) */}
+                  <CollapsibleSection isOpen={bringingPlusOne}>
+                    <FormInput
+                      label="Plus One's Name"
+                      type="text"
+                      name="plusOneName"
+                      value={formData.plusOneName}
+                      onChange={handleInputChange}
+                      placeholder="Enter their full name"
+                    />
+                    <FormInput
+                      label="Plus One's Email"
+                      type="email"
+                      name="plusOneEmail"
+                      value={formData.plusOneEmail}
+                      onChange={handleInputChange}
+                      placeholder="Enter their email"
+                    />
+                  </CollapsibleSection>
+
+                  {/* Children Toggle */}
+                  <div className="flex items-center justify-between py-4 border-b border-black/30">
+                    <label className="block text-xs md:text-[13px] font-medium text-gray mb-2 uppercase">
+                      Are you bringing children?
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setBringingChildren(!bringingChildren)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${bringingChildren ? 'bg-primary' : 'bg-gray-300'
+                        }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${bringingChildren ? 'translate-x-6' : 'translate-x-1'
+                          }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Number of Children (Conditional with Animation) */}
+                  <CollapsibleSection isOpen={bringingChildren}>
+                    <FormInput
+                      label="Number of children"
+                      type="number"
+                      name="childrenCount"
+                      value={formData.childrenCount}
+                      onChange={handleInputChange}
+                      min="0"
+                      max="10"
+                    />
+                  </CollapsibleSection>
+
+                  {/* Divider */}
+                  <div className="h-px bg-black/30 my-8" />
+                </>
+              )}
 
               {/* Cash Gift Section */}
               <div>
@@ -340,6 +359,19 @@ export default function RSVPForm() {
                       <p className="text-base text-gray mb-6">
                         Kindly send cash gift via any convenient platform
                       </p>
+
+                      {!isAttending && (
+                        <FormInput
+                          label="Full Name"
+                          type="text"
+                          name="fullName"
+                          value={formData.fullName}
+                          onChange={handleInputChange}
+                          placeholder="Enter your full name"
+                          className="mb-8"
+                          required
+                        />
+                      )}
 
                       <FormInput
                         label="Amount"
