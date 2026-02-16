@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect } from "react";
+import Image from "next/image";
 import { ArrowDown } from "lucide-react";
 import WeddingDetails from "./components/wedding-details";
 import RSVPForm from "./components/rsvp-form";
@@ -60,10 +61,16 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
         {/* Background Image with Overlay */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/hero-image.png')" }}
-        >
+        <div className="absolute inset-0">
+          <Image
+            src="/hero-image.png"
+            alt=""
+            fill
+            priority
+            quality={85}
+            sizes="100vw"
+            className="object-cover object-top md:object-[center_-150px]"
+          />
           <div className="absolute inset-0 bg-black/40" />
         </div>
 
