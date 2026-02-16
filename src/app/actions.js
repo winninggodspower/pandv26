@@ -3,6 +3,7 @@ import { object, string, number, boolean } from "yup"
 import mongoose from "mongoose"
 import dbConnect from "./lib/mongoose"
 import RSVP from "./models/rsvp"
+import { sendRsvpConfirmationEmail } from "./lib/email"
 
 const rsvpSchema = object({
   fullName: string().trim().required("Full name is required"),
@@ -58,7 +59,25 @@ export async function submitRSVP(formDataObj) {
 
     console.log("Saved document:", savedDoc)
 
-    return { success: true, message: "RSVP submitted successfully!" }
+    const ticketNumber = `PV${savedDoc._id.toString().slice(-5).toUpperCase()}`
+    let message = "RSVP submitted successfully!"
+
+    try {
+      await sendRsvpConfirmationEmail({
+        toEmail: validatedData.email,
+        guestName: validatedData.fullName,
+        childrenCount: Number(validatedData.childrenCount ?? 0),
+        ticketNumber,
+      })
+      if (validatedData.email) {
+        message = "RSVP submitted successfully! A confirmation email has been sent."
+      }
+    } catch (emailError) {
+      console.error("RSVP email send failed:", emailError)
+      message = "RSVP submitted successfully, but confirmation email could not be sent."
+    }
+
+    return { success: true, message }
   } catch (error) {
     if (error.name === "ValidationError") {
       const errors = Array.isArray(error.inner) && error.inner.length > 0
