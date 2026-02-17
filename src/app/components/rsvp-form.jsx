@@ -182,7 +182,7 @@ export default function RSVPForm() {
             RSVP
           </h2>
           <p className="text-sm md:text-base text-gray mb-3">
-            Kindly respond by May 30th 2026
+            Kindly respond by April 30th 2026
           </p>
           <div className="flex justify-center">
             <img src="/solar-line.svg" alt="" />
@@ -349,11 +349,9 @@ export default function RSVPForm() {
 
                 {sendCashGift && (
                   <>
-                    <FormInput
-                      type="text"
-                      placeholder="Give cash gift"
-                      className="mb-8"
-                    />
+                    <h3 className="text-sm font-medium text-gray mb-2 uppercase">
+                      Give cash gift
+                    </h3>
 
                     <div className='px-14'>
                       <p className="text-base text-gray mb-6">

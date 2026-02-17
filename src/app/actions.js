@@ -43,6 +43,35 @@ const rsvpSchema = object({
   }),
 })
 
+async function sendRsvpEmailsInBackground({ validatedData, ticketNumber }) {
+  const sentEmails = new Set()
+  const childrenCount = Number(validatedData.childrenCount ?? 0)
+
+  const sendEmailToRecipient = async (toEmail, recipientName, recipientStatus) => {
+    if (!toEmail) return
+
+    const normalizedEmail = toEmail.trim().toLowerCase()
+    if (!normalizedEmail || sentEmails.has(normalizedEmail)) return
+
+    sentEmails.add(normalizedEmail)
+
+    try {
+      await sendRsvpConfirmationEmail({
+        toEmail,
+        recipientName,
+        recipientStatus,
+        childrenCount,
+        ticketNumber,
+      })
+    } catch (emailError) {
+      console.error(`RSVP email send failed for ${toEmail}:`, emailError)
+    }
+  }
+
+  await sendEmailToRecipient(validatedData.email, validatedData.fullName, "Invitee")
+  await sendEmailToRecipient(validatedData.plusOneEmail, validatedData.plusOneName, "Plus One")
+}
+
 export async function submitRSVP(formDataObj) {
   try {
     const validatedData = await rsvpSchema.validate(formDataObj, { abortEarly: false })
@@ -60,24 +89,10 @@ export async function submitRSVP(formDataObj) {
     console.log("Saved document:", savedDoc)
 
     const ticketNumber = `PV${savedDoc._id.toString().slice(-5).toUpperCase()}`
-    let message = "RSVP submitted successfully!"
 
-    try {
-      await sendRsvpConfirmationEmail({
-        toEmail: validatedData.email,
-        guestName: validatedData.fullName,
-        childrenCount: Number(validatedData.childrenCount ?? 0),
-        ticketNumber,
-      })
-      if (validatedData.email) {
-        message = "RSVP submitted successfully! A confirmation email has been sent."
-      }
-    } catch (emailError) {
-      console.error("RSVP email send failed:", emailError)
-      message = "RSVP submitted successfully, but confirmation email could not be sent."
-    }
+    void sendRsvpEmailsInBackground({ validatedData, ticketNumber })
 
-    return { success: true, message }
+    return { success: true, message: "RSVP submitted successfully!" }
   } catch (error) {
     if (error.name === "ValidationError") {
       const errors = Array.isArray(error.inner) && error.inner.length > 0

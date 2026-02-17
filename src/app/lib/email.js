@@ -15,12 +15,12 @@ function getZeptoConfig() {
   return { host, port, user, pass, from }
 }
 
-export async function sendRsvpConfirmationEmail({ toEmail, guestName, childrenCount, ticketNumber }) {
+export async function sendRsvpConfirmationEmail({ toEmail, recipientName, recipientStatus = "Invitee", childrenCount, ticketNumber }) {
   if (!toEmail) return
 
   const { host, port, user, pass, from } = getZeptoConfig()
-  const html = buildRsvpEmailHtml({ guestName, childrenCount, ticketNumber })
-  const text = buildRsvpEmailText({ guestName, childrenCount, ticketNumber })
+  const html = buildRsvpEmailHtml({ recipientName, recipientStatus, childrenCount, ticketNumber })
+  const text = buildRsvpEmailText({ recipientName, recipientStatus, childrenCount, ticketNumber })
 
   const transporter = nodemailer.createTransport({
     host,

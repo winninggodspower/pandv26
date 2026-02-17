@@ -1,7 +1,7 @@
 const EVENT_DETAILS = {
   dateLabel: "Saturday, June 20th, 2026",
   timeLabel: "12:00 PM - 2:00 PM",
-  venueLabel: "Daywaters Events Centre Plot 14 Folashade Awe St, Lekki Phase 1 Lekki 106104, Lagos, Nigeria",
+  venueLabel: "Plot 14 Folashade Ave St, Lekki Phase 1, Lekki 106104, Lagos, Nigeria",
 }
 
 function escapeHtml(value = "") {
@@ -13,8 +13,9 @@ function escapeHtml(value = "") {
     .replaceAll("'", "&#39;")
 }
 
-export function buildRsvpEmailHtml({ guestName, childrenCount, ticketNumber }) {
-  const safeGuestName = escapeHtml(guestName)
+export function buildRsvpEmailHtml({ recipientName, recipientStatus = "Invitee", childrenCount, ticketNumber }) {
+  const safeRecipientName = escapeHtml(recipientName)
+  const safeRecipientStatus = escapeHtml(recipientStatus)
   const safeChildrenCount = escapeHtml(childrenCount)
   const safeTicketNumber = escapeHtml(ticketNumber)
 
@@ -35,8 +36,18 @@ export function buildRsvpEmailHtml({ guestName, childrenCount, ticketNumber }) {
         </div>
 
         <div style="border:1px solid #c9c4bd;padding:22px 24px;background:#FFFFFF;">
-          <p style="margin:0 0 4px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#6f6f6f;">Guest</p>
-          <p style="margin:0 0 14px;font-size:14px;">${safeGuestName}</p>
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;">
+            <tr>
+              <td style="vertical-align:top;padding-right:12px;">
+                <p style="margin:0 0 4px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#6f6f6f;">Guest</p>
+                <p style="margin:0 0 14px;font-size:14px;">${safeRecipientName}</p>
+              </td>
+              <td style="vertical-align:top;padding-left:12px;">
+                <p style="margin:0 0 4px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#6f6f6f;">Status</p>
+                <p style="margin:0 0 14px;font-size:14px;">${safeRecipientStatus}</p>
+              </td>
+            </tr>
+          </table>
           <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;">
             <tr>
               <td style="vertical-align:top;padding-right:12px;">
@@ -57,13 +68,14 @@ export function buildRsvpEmailHtml({ guestName, childrenCount, ticketNumber }) {
   `
 }
 
-export function buildRsvpEmailText({ guestName, childrenCount, ticketNumber }) {
+export function buildRsvpEmailText({ recipientName, recipientStatus = "Invitee", childrenCount, ticketNumber }) {
   return `Praise & Victor RSVP Confirmation
 
 Date: ${EVENT_DETAILS.dateLabel}
 Time: ${EVENT_DETAILS.timeLabel}
 Venue: ${EVENT_DETAILS.venueLabel}
-Guest: ${guestName}
+Guest: ${recipientName}
+Status: ${recipientStatus}
 Children: ${childrenCount}
 Ticket Number: ${ticketNumber}
 `
