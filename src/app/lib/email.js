@@ -18,6 +18,8 @@ function getZeptoConfig() {
 export async function sendRsvpConfirmationEmail({ toEmail, recipientName, recipientStatus = "Invitee", childrenCount, ticketNumber }) {
   if (!toEmail) return
 
+  console.log(`Sending RSVP confirmation email to ${toEmail}...`)
+
   const { host, port, user, pass, from } = getZeptoConfig()
   const html = buildRsvpEmailHtml({ recipientName, recipientStatus, childrenCount, ticketNumber })
   const text = buildRsvpEmailText({ recipientName, recipientStatus, childrenCount, ticketNumber })

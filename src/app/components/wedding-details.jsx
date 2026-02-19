@@ -157,15 +157,6 @@ export default function WeddingDetails() {
                   <Calendar className="size-4" /> Google Calendar
                 </a>
 
-                {/* Apple / Outlook */}
-                <a
-                  href="/files/praise-victor-wedding.ics"
-                  download
-                  className="py-3.5 rounded-[2px] w-52 bg-[#38332E] text-white text-[15px] font-semibold hover:bg-gray-900 transition flex items-center justify-center gap-3"
-                >
-                  <Calendar className="size-4" /> Apple / Outlook
-                </a>
-
               </div>
 
 
