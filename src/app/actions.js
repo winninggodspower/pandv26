@@ -90,7 +90,7 @@ export async function submitRSVP(formDataObj) {
 
     const ticketNumber = `PV${savedDoc._id.toString().slice(-5).toUpperCase()}`
 
-    void sendRsvpEmailsInBackground({ validatedData, ticketNumber })
+    await sendRsvpEmailsInBackground({ validatedData, ticketNumber })
 
     return { success: true, message: "RSVP submitted successfully!" }
   } catch (error) {
