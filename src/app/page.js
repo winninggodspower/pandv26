@@ -1,16 +1,44 @@
 "use client"
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Volume2, VolumeX } from "lucide-react";
 import WeddingDetails from "./components/wedding-details";
 import RSVPForm from "./components/rsvp-form";
 import Footer from "./components/footer";
 import { HeroFloat, Reveal, ScrollCue } from "./components/luxury-motion";
 
 export default function Home() {
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    // 1. Setup Audio
+    const audio = new Audio("/wedding-song.mp3");
+    audio.loop = true;
+    audio.volume = 0.15;
+    audioRef.current = audio;
+
+    const startAudio = () => {
+      if (audioRef.current && !isPlaying) {
+        audioRef.current.play()
+          .then(() => {
+            setIsPlaying(true);
+            // Clean up listeners once music starts
+            window.removeEventListener("click", startAudio);
+            window.removeEventListener("touchstart", startAudio);
+          })
+          .catch(err => console.log("Playback blocked:", err));
+      }
+    };
+
+    // Add listeners for the first interaction
+    window.addEventListener("click", startAudio);
+    window.addEventListener("touchstart", startAudio);
+
+    // Confetti animation, only if user hasn't requested reduced motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let cancelled = false;
@@ -41,13 +69,21 @@ export default function Home() {
       });
     }, 1700);
 
-    return () => {
+   return () => {
       cancelled = true;
       window.clearTimeout(timer);
+      window.removeEventListener("click", startAudio);
+      window.removeEventListener("touchstart", startAudio);
+      audio.pause();
     };
   }, []);
 
   const handleScrollDown = () => {
+    // Try to play immediately on button click
+    if (audioRef.current && !isPlaying) {
+      audioRef.current.play().then(() => setIsPlaying(true));
+    }
+
     const detailsSection = document.getElementById("wedding-details");
     if (!detailsSection) return;
 
@@ -55,8 +91,26 @@ export default function Home() {
     detailsSection.scrollIntoView({ behavior: useReducedMotion ? "auto" : "smooth", block: "start" });
   };
 
+  const toggleMute = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <main className="min-h-screen bg-[#F8F6F1]">
+
+      {/* Floating Mute Toggle (Essential for UX) */}
+      <button 
+        onClick={toggleMute}
+        className="fixed bottom-6 right-6 z-50 p-3 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-primary/20 hover:bg-white transition-all"
+      >
+        {isPlaying ? <Volume2 size={20} className="text-primary" /> : <VolumeX size={20} className="text-gray-400" />}
+      </button>
 
       {/* Hero Section */}
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
