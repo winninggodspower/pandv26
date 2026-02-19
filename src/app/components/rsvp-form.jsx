@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Copy, Check } from 'lucide-react';
+import { Copy, Check, SendHorizonal } from 'lucide-react';
 import { submitRSVP } from '../actions';
 import FormInput from './form-input';
 import FormSelect from './form-select';
@@ -442,7 +442,10 @@ export default function RSVPForm() {
                 disabled={isLoading}
                 className="w-full bg-primary hover:bg-amber-600 text-white font-medium py-4 rounded-[3px] text-s transition-colors flex items-center justify-center gap-2"
               >
-               {isLoading ? 'Submitting...' : '▶ SEND RSVP'}
+               {isLoading ? 
+                'Submitting...' : 
+                <span className="flex items-center gap-2"><SendHorizonal className="w-4 h-4" /> SEND RSVP</span>
+                }
               </button>
             </form>
           )}
