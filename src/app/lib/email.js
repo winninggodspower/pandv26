@@ -31,6 +31,9 @@ export async function sendRsvpConfirmationEmail({ toEmail, recipientName, recipi
       user,
       pass,
     },
+    tls: {
+      rejectUnauthorized: false, // allows self-signed certs, often needed on serverless
+    },
   })
 
   await transporter.sendMail({
