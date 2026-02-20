@@ -78,13 +78,13 @@ export default function RSVPForm() {
     {
       name: 'NGN',
       beneficiary: 'Name: Praise Deleoluwo',
-      accountNumber: 'Account number: 3433646412',
+      accountNumber: 'Account number: 3439468412',
       bankName: 'Bank name: Page',
     },
     {
       name: 'GBP',
       beneficiary: 'Name: Praise Deleoluwo',
-      accountNumber: 'Account number: 06775092',
+      accountNumber: 'Account number: 06777092',
       bankName: 'Bank name: Clear Bank',
     },
     {
@@ -99,7 +99,7 @@ export default function RSVPForm() {
     {
       name: 'USDT',
       beneficiary: 'Network: TRC 20',
-      accountNumber: 'Wallet: TUsc8sPQEcH84hh2c5Sy0u6k1qXsCDR',
+      accountNumber: 'Adress: TSr3nqBdP2FzcRqHAa9QeRM4izXnNDkDKR',
     },
   ];
 
@@ -388,7 +388,7 @@ export default function RSVPForm() {
                         </h4>
 
                         {accountDetails.map((account, index) => (
-                          <div key={index} className="border border-gray-200 rounded p-4 md:p-5">
+                          <div key={index} className="bg-[#FFFFFF] rounded p-4 md:p-5">
                             <div className="flex items-start justify-between mb-3">
                               <h5 className="font-semibold text-sm text-gray">
                                 {account.name}
@@ -401,7 +401,7 @@ export default function RSVPForm() {
                                     index
                                   )
                                 }
-                                className="text-primary hover:text-primary/80 transition"
+                                className="text-[#403F3F] hover:text-[#403F3F]/80 transition"
                                 title="Copy account details"
                               >
                                 {copiedIndex === index ? (

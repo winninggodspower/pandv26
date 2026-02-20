@@ -156,7 +156,7 @@ export default function Home() {
               <Reveal delay={0.35} className="space-y-1 mt-28">
                 <p
                   className="text-sm md:text-3xl font-light text-primary font-junge">
-                  June 26th, 2026
+                  June 20th, 2026
                 </p>
                 <p className="text-sm md:text-lg text-white tracking-widest uppercase font-light">
                   Lagos, Nigeria

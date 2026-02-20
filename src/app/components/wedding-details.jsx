@@ -98,7 +98,7 @@ export default function WeddingDetails() {
 
                 <div className="flex items-start gap-3 mb-8">
                   <Clock className="size-3 text-secondary flex-shrink-0 mt-0.5" />
-                  <p className="text-sm">3:00 PM - Till mama calls</p>
+                  <p className="text-sm">3:00 PM - 10 PM</p>
                 </div>
               </div>
             </div>
@@ -123,7 +123,7 @@ export default function WeddingDetails() {
                   <div className="text-base text-center md:text-start font-semibold text-primary uppercase mb-6 md:mb-1.5">Venue</div>
                   {/* Venue Details */}
                   <h3 className="text-2xl md:text-3xl font-junge">
-                    Dbayways Events Centre
+                    D’baywaters Events Centre
                   </h3>
                   <p className="text-sm text-gray-700 leading-relaxed text-center md:text-start">
                     Plot 14 Folashade Ave St,
