@@ -77,29 +77,30 @@ export default function RSVPForm() {
   const accountDetails = [
     {
       name: 'NGN',
-      beneficiary: 'Name: Praise Deleoluwo',
+      beneficiary: 'Name: Praise Deinduomo',
       accountNumber: 'Account number: 3439468412',
       bankName: 'Bank name: Page',
     },
     {
       name: 'GBP',
-      beneficiary: 'Name: Praise Deleoluwo',
+      sortCode: '040831',
+      beneficiary: 'Name: Praise Deinduomo',
       accountNumber: 'Account number: 06777092',
       bankName: 'Bank name: Clear Bank',
     },
     {
       name: 'US DOLLARS',
-      beneficiary: 'Beneficiary',
-      accountNumber: 'IBAN: GB45 0308 7524 7607 00',
-      bankName: 'Bank name: Beneficiary',
-      address: 'Address',
-      additionalInfo: 'Reversal UK Frernods, E14 5UT, London, United Kingdom',
-      bic: 'Correspondent BIC: CHASGBLL',
+      beneficiary: 'Victor Nwauwa',
+      iban: 'GB96 REVO 0099 7024 7607 02',
+      bic: 'REVOGB21',
+      address: 'Revolut Ltd',
+      addressLine2: '30 South Colonnade, E14 5HX, London, United Kingdom',
+      correspondentBic: 'CHASGB2L',
     },
     {
       name: 'USDT',
-      beneficiary: 'Network: TRC 20',
-      accountNumber: 'Adress: TSr3nqBdP2FzcRqHAa9QeRM4izXnNDkDKR',
+      network: 'TRC 20',
+      address: 'TSr3nqBdP2FzcRqHAa9QeRM4izXnNDkDKR',
     },
   ];
 
@@ -388,37 +389,73 @@ export default function RSVPForm() {
                         </h4>
 
                         {accountDetails.map((account, index) => (
-                          <div key={index} className="bg-[#FFFFFF] rounded p-4 md:p-5">
+                          <div key={index} className="bg-[#FFFFFF] rounded p-4 md:p-5 mb-4">
                             <div className="flex items-start justify-between mb-3">
-                              <h5 className="font-semibold text-sm text-gray">
+                              <h5 className="font-bold text-sm text-gray">
                                 {account.name}
                               </h5>
                               <button
                                 type="button"
-                                onClick={() =>
-                                  handleCopy(
-                                    `${account.beneficiary}\n${account.accountNumber}\n${account.bankName}`,
-                                    index
-                                  )
-                                }
+                                onClick={() => {
+                                  // Logic to copy all non-null values in the object
+                                  const text = Object.entries(account)
+                                    .filter(([key]) => key !== 'name')
+                                    .map(([key, val]) => `${key}: ${val}`)
+                                    .join('\n');
+                                  handleCopy(text, index);
+                                }}
                                 className="text-[#403F3F] hover:text-[#403F3F]/80 transition"
-                                title="Copy account details"
                               >
-                                {copiedIndex === index ? (
-                                  <Check className="w-5 h-5" />
-                                ) : (
-                                  <Copy className="w-5 h-5" />
-                                )}
+                                {copiedIndex === index ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
                               </button>
                             </div>
 
-                            <div className="space-y-2 text-xs text-gray">
-                              <p>{account.beneficiary}</p>
-                              <p>{account.accountNumber}</p>
-                              <p>{account.bankName}</p>
-                              {account.address && <p className="font-semibold mt-3">{account.address}</p>}
-                              {account.additionalInfo && <p>{account.additionalInfo}</p>}
-                              {account.bic && <p>{account.bic}</p>}
+                            <div className="space-y-1 text-xs text-gray">
+                              {/* GBP / Generic logic */}
+                              {account.name !== 'US DOLLARS' && account.name !== 'USDT' && (
+                                <>
+                                  {account.beneficiary && <p>Name: {account.beneficiary}</p>}
+                                  {account.sortCode && <p>Sort code: {account.sortCode}</p>}
+                                  {account.accountNumber && <p>Account number: {account.accountNumber}</p>}
+                                  {account.bankName && <p>Bank name: {account.bankName}</p>}
+                                </>
+                              )}
+
+                              {/* USD Specifics */}
+                              {account.iban && (
+                                <div className="mt-3 space-y-3">
+                                  <div>
+                                    <p>Beneficiary</p>
+                                    <p>{account.beneficiary}</p>
+                                  </div>
+                                  <div>
+                                    <p>IBAN</p>
+                                    <p>{account.iban}</p>
+                                  </div>
+                                  <div>
+                                    <p>BIC / SWIFT code</p>
+                                    <p>{account.bic}</p>
+                                  </div>
+                                  <div>
+                                    <p>Address</p>
+                                    <p>{account.address}</p>
+                                    <p>{account.addressLine2}</p>
+                                  </div>
+                                  <div>
+                                    <p>Correspondent BIC</p>
+                                    <p>{account.correspondentBic}</p>
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* USDT Specifics */}
+                              {account.network && <p>Network: {account.network}</p>}
+                              {account.address && account.name === "USDT" && (
+                                <div className="mt-2">
+                                  <p>Address:</p>
+                                  <p className="break-all">{account.address}</p>
+                                </div>
+                              )}
                             </div>
                           </div>
                         ))}
@@ -442,9 +479,9 @@ export default function RSVPForm() {
                 disabled={isLoading}
                 className="w-full bg-primary hover:bg-amber-600 text-white font-medium py-4 rounded-[3px] text-s transition-colors flex items-center justify-center gap-2"
               >
-               {isLoading ? 
-                'Submitting...' : 
-                <span className="flex items-center gap-2"><SendHorizonal className="w-4 h-4" /> SEND RSVP</span>
+                {isLoading ?
+                  'Submitting...' :
+                  <span className="flex items-center gap-2"><SendHorizonal className="w-4 h-4" /> SEND RSVP</span>
                 }
               </button>
             </form>
