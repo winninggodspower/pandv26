@@ -98,7 +98,7 @@ export default function WeddingDetails() {
 
                 <div className="flex items-start gap-3 mb-8">
                   <Clock className="size-3 text-secondary flex-shrink-0 mt-0.5" />
-                  <p className="text-sm">3:00 PM - 10 PM</p>
+                  <p className="text-sm">3:00 PM - 10:00 PM</p>
                 </div>
               </div>
             </div>
@@ -157,6 +157,16 @@ export default function WeddingDetails() {
                   <Calendar className="size-4" /> Google Calendar
                 </a>
 
+                {/* Apple / Outlook */}
+                <a
+                  href="https://outlook.office.com/calendar/0/deeplink/compose?subject=Praise+%26+Victor+Wedding&startdt=2026-06-20T09:00:00&enddt=2026-06-20T17:00:00&body=Join+us+at+Plot+14+Folashade+Ave+Lekki+Phase+1+Lagos+Nigeria&location=Plot+14+Folashade+Ave+Lekki+Phase+1+Lagos+Nigeria"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3.5 rounded-[2px] w-52 bg-[#38332E] text-white text-[15px] font-semibold hover:bg-gray-900 transition flex items-center ps-6 gap-3"
+                >
+                  <Calendar className="size-4" /> Apple
+                </a>
+
               </div>
 
 
@@ -181,3 +191,4 @@ export default function WeddingDetails() {
     </section>
   );
 }
+

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowDown, Volume2, VolumeX } from "lucide-react";
 import WeddingDetails from "./components/wedding-details";
+import ColorOfDay from "./components/color-of-day";
 import RSVPForm from "./components/rsvp-form";
 import Footer from "./components/footer";
 import { HeroFloat, Reveal, ScrollCue } from "./components/luxury-motion";
@@ -181,6 +182,8 @@ export default function Home() {
 
       {/* Wedding Details Section */}
       <WeddingDetails />
+      
+      <ColorOfDay />
 
       {/* RSVP Form Section */}
       <RSVPForm />
@@ -191,3 +194,4 @@ export default function Home() {
     </main>
   )
 }
+
