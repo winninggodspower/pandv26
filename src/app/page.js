@@ -35,9 +35,17 @@ export default function Home() {
       }
     };
 
+    const handleVisibilityChange = () => {
+      if (document.hidden && audioRef.current) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    };
+
     // Add listeners for the first interaction
     window.addEventListener("click", startAudio);
     window.addEventListener("touchstart", startAudio);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     // Confetti animation, only if user hasn't requested reduced motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -75,6 +83,7 @@ export default function Home() {
       window.clearTimeout(timer);
       window.removeEventListener("click", startAudio);
       window.removeEventListener("touchstart", startAudio);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       audio.pause();
     };
   }, []);
@@ -194,4 +203,3 @@ export default function Home() {
     </main>
   )
 }
-
