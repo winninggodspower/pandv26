@@ -127,13 +127,13 @@ export default function Home() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image
-            src="/hero-image.png"
+            src="/963FCB95-ACD6.jpg"
             alt=""
             fill
             priority
             quality={85}
             sizes="100vw"
-            className="object-cover object-top md:object-[center_-150px]"
+            className="object-cover object-center"
           />
           <div className="absolute inset-0 bg-black/40" />
         </div>
