@@ -133,9 +133,10 @@ export default function Home() {
             priority
             quality={85}
             sizes="100vw"
-            className="object-cover object-center"
+            className="object-cover object-center md:scale-100 md:object-top"
+            // className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-black/15" />
         </div>
 
         {/* Content */}

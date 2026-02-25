@@ -354,7 +354,7 @@ export default function RSVPForm() {
                       Give cash gift
                     </h3>
 
-                    <div className='px-14'>
+                    <div className='px-8 md:px-14'>
                       <p className="text-base text-gray mb-6">
                         Kindly send cash gift via any convenient platform
                       </p>
