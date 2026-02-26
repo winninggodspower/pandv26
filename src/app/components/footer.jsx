@@ -35,7 +35,10 @@ export default function Footer() {
 
           {/* Footer Message */}
           <p className="text-xs md:text-sm tracking-wide px-2">
-            Made with love for praise and Victor's special day
+            Made with love for 
+            Praise and Victor's special day <br />
+            
+            desktech@2026
           </p>
         </div>
       </div>
