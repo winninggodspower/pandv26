@@ -77,6 +77,19 @@ export async function submitRSVP(formDataObj) {
     const validatedData = await rsvpSchema.validate(formDataObj, { abortEarly: false })
     console.log("RSVP Validation successful:", validatedData)
 
+    // In development we don't persist to the database
+    if (process.env.NODE_ENV === "development") {
+      console.log("Development environment detected – skipping DB save")
+
+      // generate a placeholder ticket number
+      const ticketNumber = `DEV${Date.now().toString().slice(-5)}`
+
+      // still send emails so developers can verify notification flow
+      await sendRsvpEmailsInBackground({ validatedData, ticketNumber })
+
+      return { success: true, message: "RSVP submitted (not saved in development)." }
+    }
+
     // Connect to MongoDB
     await dbConnect()
 
