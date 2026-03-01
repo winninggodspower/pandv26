@@ -10,7 +10,7 @@ const EVENT_DETAILS = {
   venueLabel: "Plot 14 Folashade Ave St, Lekki Phase 1, Lekki 106104, Lagos, Nigeria",
 }
 
-const BASE_URL = "https://pandv26.com/"
+const BASE_URL = "https://pandv26.com"
 
 function icon(name, alt = "") {
   const src = `${BASE_URL}/icons/${name}.svg`;
