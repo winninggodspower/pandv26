@@ -79,7 +79,7 @@ export default function RSVPForm() {
       name: 'NGN',
       beneficiary: 'Name: Praise Deinduomo',
       accountNumber: 'Account number: 3439468412',
-      bankName: 'Bank name: Page',
+      bankName: 'Bank name: Paga',
     },
     {
       name: 'GBP',
