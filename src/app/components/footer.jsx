@@ -25,9 +25,9 @@ export default function Footer() {
             <p className="text-sm md:text-base uppercase font-medium">
               Questions? Contact us at
             </p>
-            <p className="text-sm md:text-base">
-              P&V2026.com
-            </p>
+            <a className="text-sm md:text-base" href="tel:+2347030196806">
+              +234 703 019 6806
+            </a>
           </div>
 
           {/* Divider */}

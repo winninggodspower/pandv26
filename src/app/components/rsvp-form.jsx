@@ -175,16 +175,16 @@ export default function RSVPForm() {
     <section className="py-14 md:py-24 px-4 md:px-8 bg-[#FCFBF8]">
       <div className="max-w-2xl mx-auto">
         {/* RSVP Header */}
-        <div className="text-center mb-8 md:mb-12">
+        <div className="text-center mb-8">
           <div className="flex justify-center mb-3">
             <img src="/solar-heart-shine.svg" alt="Heart" className="w-6 h-6" />
           </div>
           <h2 className="text-4xl md:text-5xl font-light text-gray mb-4 font-junge">
             RSVP
           </h2>
-          <p className="text-sm md:text-base text-gray mb-3">
+          {/* <p className="text-sm md:text-base text-gray mb-3">
             Kindly respond by April 30th 2026
-          </p>
+          </p> */}
           <div className="flex justify-center">
             <img src="/solar-line.svg" alt="" />
           </div>
