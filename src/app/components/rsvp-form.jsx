@@ -172,7 +172,7 @@ export default function RSVPForm() {
   };
 
   return (
-    <section className="py-14 md:py-24 px-4 md:px-8 bg-[#FCFBF8]">
+    <section id="rsvp" className="py-14 md:py-24 px-4 md:px-8 bg-[#FCFBF8]">
       <div className="max-w-2xl mx-auto">
         {/* RSVP Header */}
         <div className="text-center mb-8">
