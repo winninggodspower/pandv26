@@ -7,7 +7,7 @@ const EVENT_DETAILS = {
     dateLabel: "Saturday, June 20th, 2026",
     timeLabel: "3:00 PM - 10:00 PM",
   },
-  venueLabel: " Dbaywaters Events Centre Plot 14 Folashade Ave St, Lekki Phase 1, Lekki 106104, Lagos, Nigeria",
+  venueLabel: " Dbaywaters Events Centre Plot 14 Folashade Awe St, Lekki Phase 1, Lekki 106104, Lagos, Nigeria",
 }
 
 function escapeHtml(value = "") {

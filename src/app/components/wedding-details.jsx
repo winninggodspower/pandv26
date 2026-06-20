@@ -126,7 +126,7 @@ export default function WeddingDetails() {
                     D’baywaters Events Centre
                   </h3>
                   <p className="text-sm text-gray-700 leading-relaxed text-center md:text-start">
-                    Plot 14 Folashade Ave St,
+                    Plot 14 Folashade Awe St,
                     Lekki Phase 1,<br />
                     Lekki 106104, Lagos, Nigeria
                   </p>
